@@ -49,4 +49,34 @@ class Section {
         return this.books.map(book => `${book.title} (${book.isAvailable ? 'Available' : 'Not Available'})`).join(', '); 
     }
    }
+   
+
+//Task 3- create a Patron Class
+
+class Patron {
+    constructor (name) {
+        this.name = name;
+        this.borrowedBooks = [];
+    }
+    borrowBook(book) {
+        if (book.isAvailable) {
+            book.isAvailable = false; 
+            this.borrowedBooks.push(book); 
+            console.log(`${this.name} has borrowed "${book.title}".`);
+        } else {
+            console.log(`"${book.title}" is not available for checkout.`);
+        }
+    }
+
+    returnBook(title) {
+        const book = this.borrowedBooks.find(book => book.title === title);
+        if (book) {
+            book.isAvailable = true; 
+            this.borrowedBooks = this.borrowedBooks.filter(b => b !== book); // Takes book out of the list
+            console.log(`${this.name} returned "${book.title}".`);
+        } else {
+            console.log(`${this.name} does not have "${title}" borrowed.`);
+        }
+    }
+}
 
